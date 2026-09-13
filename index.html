@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joshua Zink — Instructional Design Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: #f5f6f8;
+      color: #1a1a2e;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a2744 0%, #2c3e6b 100%);
+      color: #fff;
+      padding: 56px 40px 48px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    header .credential {
+      font-size: 1rem;
+      color: #a8bcd8;
+      margin-bottom: 18px;
+      font-weight: 400;
+    }
+    header p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      color: #cdd8ea;
+    }
+    .contact-line {
+      font-size: 0.9rem;
+      color: #8faacb;
+    }
+    .contact-line a {
+      color: #7eb8e8;
+      text-decoration: none;
+    }
+    .contact-line a:hover { text-decoration: underline; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 52px 24px 72px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #7a8aaa;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 28px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+      border: 1px solid #e8ecf2;
+    }
+    .card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    .card-accent {
+      height: 5px;
+    }
+    .accent-blue   { background: #2563eb; }
+    .accent-teal   { background: #0d9488; }
+    .accent-violet { background: #7c3aed; }
+    .accent-amber  { background: #d97706; }
+
+    .card-body {
+      padding: 28px 28px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #7a8aaa;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #1a1a2e;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #4a5568;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .meta-item {
+      font-size: 0.78rem;
+      color: #6b7a99;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .meta-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #c0ccde;
+      display: inline-block;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s;
+      align-self: flex-start;
+    }
+    .btn-blue   { background: #2563eb; color: #fff; }
+    .btn-blue:hover   { background: #1d4ed8; }
+    .btn-teal   { background: #0d9488; color: #fff; }
+    .btn-teal:hover   { background: #0f766e; }
+    .btn-violet { background: #7c3aed; color: #fff; }
+    .btn-violet:hover { background: #6d28d9; }
+    .btn-amber  { background: #d97706; color: #fff; }
+    .btn-amber:hover  { background: #b45309; }
+
+    /* ── ABOUT ── */
+    .about-strip {
+      background: #fff;
+      border: 1px solid #e8ecf2;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 44px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .about-strip p {
+      font-size: 0.97rem;
+      line-height: 1.7;
+      color: #374151;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a2744;
+      color: #7a90b4;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.85rem;
+    }
+    footer a { color: #7eb8e8; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      .grid { grid-template-columns: 1fr; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Joshua Zink</h1>
+  <p class="credential">D.M.A. &nbsp;|&nbsp; Learning Experience Designer &nbsp;|&nbsp; Kennesaw, GA</p>
+  <p>
+    I design learning experiences that are grounded in research, built for real performance outcomes,
+    and respect how adults actually learn. The four courses below represent my applied instructional design work —
+    each built in Articulate Rise 360 using ADDIE, evidence-based content design, and varied interaction strategies.
+  </p>
+  <p class="contact-line">
+    zinkj2@gmail.com &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="https://linkedin.com/in/joshuazink" target="_blank">linkedin.com/in/joshuazink</a>
+  </p>
+</header>
+
+<main>
+
+  <div class="about-strip">
+    <p>
+      These courses span adult learning science, organizational change management, manager development,
+      and domain-specific technical instruction — demonstrating range across content type, audience, and design approach.
+      Every course opens with a problem before presenting a framework, uses knowledge checks written above the recall level,
+      and practices the design principles it teaches.
+    </p>
+  </div>
+
+  <p class="section-label">Instructional Design Portfolio — 4 Courses</p>
+
+  <div class="grid">
+
+    <!-- Course 1: How Adults Learn -->
+    <div class="card">
+      <div class="card-accent accent-blue"></div>
+      <div class="card-body">
+        <p class="card-tag">Adult Learning Science &nbsp;·&nbsp; L&amp;D Practitioners</p>
+        <h2>Designing Effective Workplace Learning: The Science of Adult Training</h2>
+        <p>
+          A six-lesson course translating adult learning research into practical instructional design decisions.
+          Covers Knowles' andragogy, cognitive load theory, the Ebbinghaus forgetting curve, Kirkpatrick's
+          evaluation framework, and Mayer's multimedia learning principles — with applied examples throughout.
+          Written for L&amp;D professionals and managers who design or commission training.
+        </p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span> 6 lessons</span>
+          <span class="meta-item"><span class="meta-dot"></span> Articulate Rise 360</span>
+          <span class="meta-item"><span class="meta-dot"></span> Flashcards, sorting, scenarios</span>
+        </div>
+        <a class="btn btn-blue" href="./how-adults-learn/" target="_blank">Launch Course</a>
+      </div>
+    </div>
+
+    <!-- Course 2: Change Management -->
+    <div class="card">
+      <div class="card-accent accent-teal"></div>
+      <div class="card-body">
+        <p class="card-tag">Organizational Development &nbsp;·&nbsp; People Managers</p>
+        <h2>Leading Teams Through Change: A Practical Guide for Managers</h2>
+        <p>
+          A six-lesson course equipping managers with evidence-based tools for leading organizational transitions.
+          Covers the Prosci ADKAR model, the Change Curve, communicating in uncertainty, sustaining adoption,
+          and building a personal change leadership action plan. Designed for mid-level managers navigating
+          enterprise change initiatives.
+        </p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span> 6 lessons</span>
+          <span class="meta-item"><span class="meta-dot"></span> Articulate Rise 360</span>
+          <span class="meta-item"><span class="meta-dot"></span> Tabs, flashcards, action planning</span>
+        </div>
+        <a class="btn btn-teal" href="./change-management/" target="_blank">Launch Course</a>
+      </div>
+    </div>
+
+    <!-- Course 3: Feedback for New Managers -->
+    <div class="card">
+      <div class="card-accent accent-violet"></div>
+      <div class="card-body">
+        <p class="card-tag">Manager Development &nbsp;·&nbsp; New Managers</p>
+        <h2>Giving Feedback as a New Manager</h2>
+        <p>
+          A twelve-lesson micro-learning course teaching new managers a practical framework for delivering
+          clear, specific, and constructive feedback. Introduces the SBI (Situation-Behavior-Impact) model
+          and walks learners through two realistic workplace scenarios with branching practice. Built for
+          corporate onboarding and manager effectiveness programs.
+        </p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span> 12 lessons</span>
+          <span class="meta-item"><span class="meta-dot"></span> Articulate Rise 360</span>
+          <span class="meta-item"><span class="meta-dot"></span> Scenario practice, micro-learning</span>
+        </div>
+        <a class="btn btn-violet" href="./feedback-manager/" target="_blank">Launch Course</a>
+      </div>
+    </div>
+
+    <!-- Course 4: Vocal Feedback -->
+    <div class="card">
+      <div class="card-accent accent-amber"></div>
+      <div class="card-body">
+        <p class="card-tag">Technical / Domain-Specific &nbsp;·&nbsp; Music Educators</p>
+        <h2>Giving Effective, Evidence-Based Vocal Feedback</h2>
+        <p>
+          A six-lesson course for undergraduate voice students and early-career teachers covering vocal
+          anatomy, technique analysis, fault diagnosis, and evidence-based feedback language. Demonstrates
+          instructional design for highly technical, domain-specific content — translating complex vocal
+          science into actionable teaching frameworks for a specialized professional audience.
+        </p>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-dot"></span> 6 lessons + assessment</span>
+          <span class="meta-item"><span class="meta-dot"></span> Articulate Rise 360</span>
+          <span class="meta-item"><span class="meta-dot"></span> Tabs, knowledge checks, step-by-step</span>
+        </div>
+        <a class="btn btn-amber" href="./vocal-feedback/" target="_blank">Launch Course</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>Joshua Zink, D.M.A. &nbsp;|&nbsp; zinkj2@gmail.com &nbsp;|&nbsp;
+    <a href="https://linkedin.com/in/joshuazink" target="_blank">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>
