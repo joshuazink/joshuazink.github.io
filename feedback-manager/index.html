@@ -1,28 +1,449 @@
-<!doctype html>
-<!-- 
-course package version: XU9JJoB1
-rise_frontend sha: 436b8f3e5577d74a819ef3509f0cef199a2085f7
-ai_scenario sha: c97faa230f53e99ff32bfc46655980304047c841
-learn_distribution_frontend sha: 37ed5d5bef9b3cd00b331a09bf3605725d68b8b2
-mondrian sha: f31e32634689891b5ec678fc56ef5fed7d9b0a8c
-sandbox sha: 42753f3391b109fa3788c525c22880445ab48325
- -->
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Giving Feedback as a New Manager</title>
-    
-    <script type="application/json" id="__CONFIG__">
-      {"remoteManifest":{"ai_scenario":{".js":["ai-scenario/entry.js"]},"learn_distribution_frontend":{".js":["learn_dist/entry.js"]},"mondrian":{".js":["mondrian/entry.js"]}},"assetTargetPrefixes":{"media":"assets","font":"lib/fonts"},"loadOnlyInLms":false}
-    </script>
-    
-    <script src="lib/dist/c7ae2a54.js"></script>
-  </head>
-  <body>
-    <div id="app"></div>
-    
-      <script src="lib/rise/ffec9dba.js"></script>
-    
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Giving Feedback as a New Manager | Joshua Zink</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#fafaf9;color:#1c1917;line-height:1.6}
+
+/* HEADER */
+.course-header{background:linear-gradient(135deg,#292524 0%,#44403c 100%);color:#fff;padding:40px 24px 32px;text-align:center}
+.course-header .tag{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fcd34d;margin-bottom:12px}
+.course-header h1{font-size:1.75rem;font-weight:800;line-height:1.25;max-width:600px;margin:0 auto 12px}
+.course-header .meta{font-size:.9rem;color:#a8a29e;margin-top:8px}
+
+/* PROGRESS */
+.progress-bar-wrap{background:#1c1917;padding:0 24px 16px;display:flex;align-items:center;gap:12px;max-width:820px;margin:0 auto}
+.progress-track{flex:1;height:6px;background:#44403c;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:#f59e0b;border-radius:3px;transition:width .4s ease;width:0%}
+.progress-label{font-size:.78rem;color:#78716c;white-space:nowrap;min-width:80px;text-align:right}
+
+/* NAV */
+.lesson-nav{background:#fff;border-bottom:1px solid #e7e5e4;overflow-x:auto}
+.lesson-nav-inner{display:flex;max-width:820px;margin:0 auto;padding:0 8px}
+.nav-btn{flex:0 0 auto;padding:14px 14px;font-size:.78rem;font-weight:600;color:#78716c;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.nav-btn:hover{color:#f59e0b}
+.nav-btn.active{color:#d97706;border-bottom-color:#d97706}
+.nav-btn.done{color:#16a34a}
+.nav-btn.done::before{content:"✓ ";font-size:.7rem}
+
+/* CONTENT */
+.lesson-wrap{max-width:820px;margin:0 auto;padding:32px 24px 64px}
+.lesson{display:none}
+.lesson.active{display:block}
+.lesson-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#d97706;margin-bottom:8px}
+.lesson h2{font-size:1.5rem;font-weight:800;color:#1c1917;margin-bottom:8px;line-height:1.3}
+.lesson .hook{font-size:1.05rem;color:#57534e;margin-bottom:24px;line-height:1.7;border-left:4px solid #f59e0b;padding:12px 16px;background:#fffbeb;border-radius:0 8px 8px 0}
+.lesson p{margin-bottom:14px;color:#44403c;font-size:.97rem}
+
+/* SECTION LABEL */
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a8a29e;margin:24px 0 12px}
+
+/* MISTAKE CARDS (swipe-style) */
+.mistake-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:16px}
+.mistake-card{background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:20px;border-top:4px solid #ef4444}
+.mistake-card .icon{font-size:1.5rem;margin-bottom:8px}
+.mistake-card h4{font-size:.92rem;font-weight:700;color:#1c1917;margin-bottom:6px}
+.mistake-card p{font-size:.84rem;color:#78716c;margin:0;line-height:1.5}
+
+/* CONTRAST BUBBLES */
+.contrast-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.bubble-col h4{font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.bubble{padding:14px 16px;border-radius:10px;font-size:.9rem;margin-bottom:8px;line-height:1.5}
+.bubble.bad{background:#fee2e2;border-left:3px solid #ef4444;color:#7f1d1d}
+.bubble.good{background:#dcfce7;border-left:3px solid #16a34a;color:#14532d}
+.bubble .label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;opacity:.7}
+
+/* SBI MODEL */
+.sbi-model{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+.sbi-block{text-align:center;padding:20px 12px;border-radius:12px;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.sbi-block:hover,.sbi-block.active{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.sbi-block.s{background:#dbeafe;border-color:#3b82f6}.sbi-block.s:hover,.sbi-block.s.active{border-color:#1d4ed8}
+.sbi-block.b{background:#fef3c7;border-color:#f59e0b}.sbi-block.b:hover,.sbi-block.b.active{border-color:#b45309}
+.sbi-block.i{background:#dcfce7;border-color:#22c55e}.sbi-block.i:hover,.sbi-block.i.active{border-color:#15803d}
+.sbi-block .letter{font-size:2rem;font-weight:900;line-height:1;margin-bottom:4px}
+.sbi-block.s .letter{color:#1d4ed8}
+.sbi-block.b .letter{color:#b45309}
+.sbi-block.i .letter{color:#15803d}
+.sbi-block h4{font-size:.88rem;font-weight:700;margin-bottom:4px;color:#1c1917}
+.sbi-block p{font-size:.78rem;color:#57534e;margin:0;line-height:1.4}
+.sbi-detail{background:#fff;border:1px solid #e7e5e4;border-radius:10px;padding:18px;display:none;margin-bottom:8px}
+.sbi-detail.active{display:block}
+.sbi-detail h4{font-size:.95rem;font-weight:700;margin-bottom:8px;color:#1c1917}
+.sbi-detail p{font-size:.9rem;color:#44403c;margin-bottom:10px}
+.sbi-detail .ex{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;font-size:.88rem;font-style:italic;color:#78350f}
+.sbi-detail .ex strong{font-style:normal;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:block;color:#b45309;margin-bottom:4px}
+
+/* SBI BUILDER */
+.sbi-builder{background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:24px;margin-bottom:8px}
+.sbi-builder .scenario-box{background:#f5f5f4;border-radius:8px;padding:14px 16px;font-size:.9rem;color:#44403c;margin-bottom:20px;line-height:1.6}
+.sbi-builder .scenario-box strong{display:block;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:#78716c;margin-bottom:4px}
+.builder-step{margin-bottom:18px}
+.builder-step label{display:block;font-size:.82rem;font-weight:700;color:#1c1917;margin-bottom:6px}
+.builder-step label span{font-size:.75rem;font-weight:400;color:#a8a29e;margin-left:6px}
+.builder-step select{width:100%;padding:10px 14px;border:2px solid #e7e5e4;border-radius:8px;font-size:.9rem;color:#1c1917;background:#fff;appearance:none;cursor:pointer}
+.builder-step select:focus{outline:none;border-color:#f59e0b}
+.builder-check-btn{padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s}
+.builder-check-btn:hover{background:#b45309}
+.builder-result{margin-top:14px;padding:14px 16px;border-radius:8px;font-size:.9rem;display:none}
+.builder-result.show{display:block}
+.builder-result.correct{background:#dcfce7;border:1px solid #86efac;color:#14532d}
+.builder-result.wrong{background:#fee2e2;border:1px solid #fca5a5;color:#7f1d1d}
+
+/* BRANCHING SCENARIO */
+.scenario-frame{background:#fff;border:1px solid #e7e5e4;border-radius:12px;overflow:hidden}
+.scenario-narrative{padding:24px;background:#fafaf9;border-bottom:1px solid #e7e5e4}
+.scenario-narrative .char{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.scenario-narrative .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.scenario-narrative .avatar.manager{background:#292524;color:#fff}
+.scenario-narrative .avatar.employee{background:#e7e5e4;color:#44403c}
+.scenario-narrative .speech{background:#fff;border:1px solid #e7e5e4;border-radius:0 10px 10px 10px;padding:12px 14px;font-size:.9rem;color:#1c1917;line-height:1.5}
+.scenario-narrative .speech.manager-speech{background:#292524;color:#f5f5f4;border-radius:10px 0 10px 10px}
+.scenario-situation{padding:16px 24px;font-size:.88rem;color:#78716c;font-style:italic;border-bottom:1px solid #e7e5e4;background:#fafaf9}
+.scenario-prompt{padding:20px 24px 8px;font-size:.95rem;font-weight:600;color:#1c1917}
+.scenario-choices{padding:8px 24px 24px;display:flex;flex-direction:column;gap:10px}
+.choice-btn{text-align:left;padding:14px 16px;background:#f5f5f4;border:2px solid #e7e5e4;border-radius:10px;font-size:.9rem;color:#1c1917;cursor:pointer;transition:all .2s;line-height:1.4}
+.choice-btn:hover:not(:disabled){background:#fffbeb;border-color:#f59e0b}
+.choice-btn.chosen-correct{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.choice-btn.chosen-wrong{background:#fee2e2;border-color:#ef4444;color:#7f1d1d}
+.choice-btn:disabled{opacity:.6;cursor:default}
+.outcome-box{margin:0 24px 24px;padding:16px;border-radius:10px;font-size:.9rem;display:none;line-height:1.5}
+.outcome-box.show{display:block}
+.outcome-box.correct{background:#dcfce7;border:1px solid #86efac;color:#14532d}
+.outcome-box.wrong{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12}
+.outcome-box strong{display:block;margin-bottom:4px}
+.scenario-next{margin:0 24px 24px;display:none}
+.scenario-next.show{display:block}
+
+/* CHEAT SHEET */
+.cheatsheet{background:#fff;border:2px solid #f59e0b;border-radius:12px;padding:24px;margin-bottom:8px}
+.cheatsheet h3{font-size:1rem;font-weight:800;color:#1c1917;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.cheat-row{display:grid;grid-template-columns:1fr 2fr;gap:12px;padding:12px 0;border-bottom:1px solid #f5f5f4;font-size:.9rem}
+.cheat-row:last-child{border:none}
+.cheat-row .key{font-weight:700;color:#92400e}
+.cheat-row .val{color:#44403c}
+
+/* NEXT / BACK BUTTONS */
+.next-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s;margin-top:28px}
+.next-btn:hover{background:#b45309}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:none;color:#78716c;border:2px solid #e7e5e4;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:28px;margin-right:12px}
+.back-btn:hover{border-color:#a8a29e;color:#44403c}
+.btn-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+
+/* COMPLETE */
+.complete-banner{text-align:center;padding:48px 24px;background:#fff;border:1px solid #e7e5e4;border-radius:16px}
+.complete-banner .check{font-size:3rem;margin-bottom:16px}
+.complete-banner h2{font-size:1.4rem;font-weight:800;color:#1c1917;margin-bottom:8px}
+.complete-banner p{color:#78716c;max-width:480px;margin:0 auto 24px;font-size:.95rem}
+.back-link{display:inline-block;padding:12px 24px;background:#292524;color:#fff;border-radius:8px;font-weight:600;font-size:.9rem}
+
+@media(max-width:600px){
+  .contrast-wrap{grid-template-columns:1fr}
+  .sbi-model{grid-template-columns:1fr 1fr 1fr}
+  .mistake-grid{grid-template-columns:1fr 1fr}
+  .course-header h1{font-size:1.35rem}
+  .sbi-block .letter{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="course-header">
+  <div class="tag">Manager Development &middot; New Managers</div>
+  <h1>Giving Feedback as a New Manager</h1>
+  <p class="meta">Joshua Zink &nbsp;&middot;&nbsp; 7 Sections &nbsp;&middot;&nbsp; ~20 minutes</p>
+</div>
+<div style="background:#1c1917;padding-bottom:0">
+  <div class="progress-bar-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+    <div class="progress-label" id="prog-label">Section 1 of 7</div>
+  </div>
+</div>
+
+<nav class="lesson-nav">
+  <div class="lesson-nav-inner">
+    <button class="nav-btn active" data-lesson="0">1. The Problem</button>
+    <button class="nav-btn" data-lesson="1">2. Mistakes</button>
+    <button class="nav-btn" data-lesson="2">3. Good vs. Bad</button>
+    <button class="nav-btn" data-lesson="3">4. The SBI Model</button>
+    <button class="nav-btn" data-lesson="4">5. Build It</button>
+    <button class="nav-btn" data-lesson="5">6. Scenario Practice</button>
+    <button class="nav-btn" data-lesson="6">7. Quick Reference</button>
+  </div>
+</nav>
+
+<div class="lesson-wrap">
+
+<!-- SECTION 1 -->
+<section class="lesson active" id="l0">
+  <div class="lesson-eyebrow">Section 1 of 7</div>
+  <h2>Why Feedback Fails</h2>
+  <div class="hook">65% of employees want more feedback than they're currently getting — yet most managers avoid giving it, delay it, or deliver it in ways that backfire.</div>
+  <p>The result? Employees feel uncertain about their performance. Problems go unaddressed. Teams underperform. And new managers wonder why nothing is changing — not realizing that feedback is the missing lever.</p>
+  <p>This course gives you a simple, repeatable framework for delivering feedback that is specific, factual, and grounded in impact — not feelings or impressions.</p>
+
+  <div class="section-label">The cost of avoiding feedback</div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;overflow:hidden;margin-bottom:8px">
+    <div style="padding:18px 20px;border-bottom:1px solid #f5f5f4;display:flex;align-items:flex-start;gap:12px"><div style="font-size:1.3rem;flex-shrink:0">&#128073;</div><div><strong style="display:block;font-size:.9rem;color:#1c1917;margin-bottom:4px">Top performers leave</strong><p style="font-size:.87rem;color:#78716c;margin:0">Without recognition and growth feedback, strong employees look for opportunities elsewhere.</p></div></div>
+    <div style="padding:18px 20px;border-bottom:1px solid #f5f5f4;display:flex;align-items:flex-start;gap:12px"><div style="font-size:1.3rem;flex-shrink:0">&#128073;</div><div><strong style="display:block;font-size:.9rem;color:#1c1917;margin-bottom:4px">Poor performance becomes the norm</strong><p style="font-size:.87rem;color:#78716c;margin:0">Problems that go unaddressed become habits that are harder to break over time.</p></div></div>
+    <div style="padding:18px 20px;display:flex;align-items:flex-start;gap:12px"><div style="font-size:1.3rem;flex-shrink:0">&#128073;</div><div><strong style="display:block;font-size:.9rem;color:#1c1917;margin-bottom:4px">Your credibility suffers</strong><p style="font-size:.87rem;color:#78716c;margin:0">New managers who avoid hard conversations are seen as weak leaders — not kind ones.</p></div></div>
+  </div>
+  <p style="font-size:.9rem;color:#78716c;font-style:italic">The good news: effective feedback is a skill. And like any skill, it can be learned.</p>
+  <div class="btn-row"><button class="next-btn" onclick="goTo(1)">Next &#8594;</button></div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="lesson" id="l1">
+  <div class="lesson-eyebrow">Section 2 of 7</div>
+  <h2>Five Common Feedback Mistakes</h2>
+  <div class="hook">Most managers don't avoid feedback because they don't care — they avoid it because they don't have a reliable way to do it well. These are the five patterns that cause feedback to miss the mark.</div>
+
+  <div class="mistake-grid">
+    <div class="mistake-card"><div class="icon">&#128168;</div><h4>Too Vague</h4><p>"Be more professional" — no actionable guidance, leaves the recipient unclear on what to change.</p></div>
+    <div class="mistake-card"><div class="icon">&#128336;</div><h4>Delayed</h4><p>Waiting for annual reviews lets issues persist and misses the window when feedback is most useful.</p></div>
+    <div class="mistake-card"><div class="icon">&#128545;</div><h4>Personal Criticism</h4><p>Attacking character instead of behavior ("you don't care") triggers defensiveness and shuts down learning.</p></div>
+    <div class="mistake-card"><div class="icon">&#128514;</div><h4>The Feedback Sandwich</h4><p>Burying critical feedback between excessive compliments dilutes the message and confuses the recipient.</p></div>
+    <div class="mistake-card"><div class="icon">&#128264;</div><h4>Only Corrective</h4><p>Feedback only when things go wrong creates anxiety and misses the chance to reinforce what's working.</p></div>
+  </div>
+
+  <p><strong>Notice what all five share:</strong> they make feedback about impressions, timing failures, or personality — not about observable facts. The fix is a framework that keeps feedback grounded in evidence.</p>
+  <div class="btn-row"><button class="back-btn" onclick="goTo(0)">&#8592; Back</button><button class="next-btn" onclick="goTo(2)">Next &#8594;</button></div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="lesson" id="l2">
+  <div class="lesson-eyebrow">Section 3 of 7</div>
+  <h2>Effective vs. Ineffective: Spot the Difference</h2>
+  <div class="hook">The difference between feedback that works and feedback that backfires usually comes down to one word: <strong>specificity.</strong></div>
+  <p>Effective feedback tells someone exactly what happened, why it mattered, and what the impact was. Ineffective feedback leaves people guessing — or defensive.</p>
+
+  <div class="section-label">Compare these examples</div>
+  <div class="contrast-wrap">
+    <div class="bubble-col">
+      <h4><span style="color:#ef4444">&#10008;</span> Ineffective</h4>
+      <div class="bubble bad"><div class="label">Vague</div>"You need to step it up."</div>
+      <div class="bubble bad"><div class="label">Personal</div>"Your attitude has been off lately."</div>
+      <div class="bubble bad"><div class="label">Meaningless positive</div>"You're doing fine — keep it up."</div>
+      <div class="bubble bad"><div class="label">Judgment</div>"I feel like you're not fully committed."</div>
+    </div>
+    <div class="bubble-col">
+      <h4><span style="color:#16a34a">&#10004;</span> Effective</h4>
+      <div class="bubble good"><div class="label">Specific + factual</div>"This report was submitted two days late without notice, which delayed the client deliverable."</div>
+      <div class="bubble good"><div class="label">Behavior-focused</div>"In yesterday's meeting, you interrupted two colleagues while they were presenting."</div>
+      <div class="bubble good"><div class="label">Meaningful positive</div>"You stayed late to help onboard the new hire — that's exactly the team behavior we need more of."</div>
+    </div>
+  </div>
+  <p>Notice the pattern in the effective examples: they always describe a <strong>specific situation</strong>, a <strong>specific behavior</strong>, and a <strong>specific impact</strong>. That's not an accident — it's the SBI framework you'll learn next.</p>
+  <div class="btn-row"><button class="back-btn" onclick="goTo(1)">&#8592; Back</button><button class="next-btn" onclick="goTo(3)">Next &#8594;</button></div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="lesson" id="l3">
+  <div class="lesson-eyebrow">Section 4 of 7</div>
+  <h2>The SBI Framework</h2>
+  <div class="hook">SBI stands for <strong>Situation — Behavior — Impact.</strong> It gives you a clear, repeatable structure that removes guesswork and keeps feedback grounded in observable facts.</div>
+  <p>Select each component to learn what it means and how to use it.</p>
+
+  <div class="sbi-model" id="sbi-grid">
+    <div class="sbi-block s" onclick="showSBI(0)"><div class="letter">S</div><h4>Situation</h4><p>When &amp; where</p></div>
+    <div class="sbi-block b" onclick="showSBI(1)"><div class="letter">B</div><h4>Behavior</h4><p>What they did</p></div>
+    <div class="sbi-block i" onclick="showSBI(2)"><div class="letter">I</div><h4>Impact</h4><p>The effect</p></div>
+  </div>
+  <div class="sbi-detail" id="sbi0">
+    <h4>Situation — Set the specific context</h4>
+    <p>Describe when and where the behavior occurred. Be precise — not "recently" or "sometimes," but "last Tuesday" or "in this morning's meeting."</p>
+    <div class="ex"><strong>Example</strong>"In this morning's team meeting..." &nbsp;&nbsp; "Last Friday, when the client report was due..."</div>
+  </div>
+  <div class="sbi-detail" id="sbi1">
+    <h4>Behavior — Describe what you observed</h4>
+    <p>Stick to observable facts — what the person said or did. No interpretations, no assumptions about intent. This is the hardest part: staying factual when you're frustrated.</p>
+    <div class="ex"><strong>Example</strong>"...you presented the project update without the data the team had requested..." &nbsp;&nbsp; "...you submitted it four hours late without flagging the delay in advance..."</div>
+  </div>
+  <div class="sbi-detail" id="sbi2">
+    <h4>Impact — Explain the effect</h4>
+    <p>Describe the real consequence on the team, the project, the customer, or the business. This is what makes feedback land — it connects the behavior to something that matters beyond the person's intentions.</p>
+    <div class="ex"><strong>Example</strong>"...which meant we couldn't make a decision on next steps and the meeting ran 20 minutes over." &nbsp;&nbsp; "...which put our account team in an uncomfortable position with the client."</div>
+  </div>
+
+  <div class="section-label" style="margin-top:24px">Full SBI statement — put it together</div>
+  <div style="background:#fff;border:2px solid #f59e0b;border-radius:10px;padding:18px 20px;font-size:.92rem;color:#1c1917;line-height:1.7;margin-bottom:8px">
+    <span style="color:#1d4ed8;font-weight:700">"In this morning's team meeting</span> [S], <span style="color:#b45309;font-weight:700">you presented the project update without the data the team had requested</span> [B], <span style="color:#15803d;font-weight:700">which meant we couldn't make a decision on next steps and the meeting ran 20 minutes over</span> [I]."
+  </div>
+  <p style="font-size:.88rem;color:#78716c">SBI works for both corrective <em>and</em> positive feedback. Use it consistently — not just when something goes wrong.</p>
+  <div class="btn-row"><button class="back-btn" onclick="goTo(2)">&#8592; Back</button><button class="next-btn" onclick="goTo(4)">Next &#8594;</button></div>
+</section>
+
+<!-- SECTION 5: SBI BUILDER -->
+<section class="lesson" id="l4">
+  <div class="lesson-eyebrow">Section 5 of 7</div>
+  <h2>Build an SBI Statement</h2>
+  <div class="hook">You know the framework. Now apply it. Select the correct component for each part of the feedback statement below.</div>
+
+  <div class="sbi-builder">
+    <div class="scenario-box"><strong>The situation</strong>Your team member, Marcus, has been consistently the last to contribute in team brainstorming sessions — sitting silently while others generate ideas. In this morning's session, he said nothing for the entire first 30 minutes.</div>
+
+    <div class="builder-step">
+      <label>Choose the <span style="color:#1d4ed8;font-weight:700">Situation</span> statement: <span>When and where did this happen?</span></label>
+      <select id="sb-s">
+        <option value="">-- Select --</option>
+        <option value="correct">In this morning's 45-minute brainstorming session...</option>
+        <option value="wrong1">Marcus doesn't participate enough...</option>
+        <option value="wrong2">Lately, you've been quiet in meetings...</option>
+      </select>
+    </div>
+    <div class="builder-step">
+      <label>Choose the <span style="color:#b45309;font-weight:700">Behavior</span> statement: <span>What observable action happened?</span></label>
+      <select id="sb-b">
+        <option value="">-- Select --</option>
+        <option value="wrong1">...you seemed disengaged and uninterested...</option>
+        <option value="correct">...you didn't contribute any ideas during the first 30 minutes...</option>
+        <option value="wrong2">...your attitude is holding the team back...</option>
+      </select>
+    </div>
+    <div class="builder-step">
+      <label>Choose the <span style="color:#15803d;font-weight:700">Impact</span> statement: <span>What was the effect?</span></label>
+      <select id="sb-i">
+        <option value="">-- Select --</option>
+        <option value="wrong1">...which shows you don't value the team.</option>
+        <option value="wrong2">...which frustrated me.</option>
+        <option value="correct">...which meant the team missed your perspective on the product strategy we're developing.</option>
+      </select>
+    </div>
+    <button class="builder-check-btn" onclick="checkBuilder()">Check My Feedback Statement</button>
+    <div class="builder-result" id="builder-result"></div>
+  </div>
+  <div class="btn-row"><button class="back-btn" onclick="goTo(3)">&#8592; Back</button><button class="next-btn" onclick="goTo(5)">Next &#8594;</button></div>
+</section>
+
+<!-- SECTION 6: BRANCHING SCENARIO -->
+<section class="lesson" id="l5">
+  <div class="lesson-eyebrow">Section 6 of 7</div>
+  <h2>Scenario Practice: The Late Deliverable</h2>
+  <div class="hook">Jordan is a solid team member who has missed two deadlines in three weeks without communicating delays. Other team members have had to pick up the slack. Your manager is asking questions.</div>
+  <p>You need to deliver feedback to Jordan before the next project kicks off Monday. How do you open?</p>
+
+  <div class="scenario-frame" id="sf1">
+    <div class="scenario-situation">You ask Jordan to meet with you privately. Jordan sits down and looks at you.</div>
+    <div class="scenario-prompt">How do you open the conversation?</div>
+    <div class="scenario-choices">
+      <button class="choice-btn" onclick="pickChoice(1,'A')">A. &nbsp;"Jordan, you've really been dropping the ball lately. I need to know what's going on."</button>
+      <button class="choice-btn" onclick="pickChoice(1,'B')">B. &nbsp;"Jordan, over the past three weeks, two of your project deliverables were submitted after the deadline without advance notice, and other team members had to cover. I want to understand what happened."</button>
+      <button class="choice-btn" onclick="pickChoice(1,'C')">C. &nbsp;"Jordan, you're a great team member — I just wanted to check in about some deadlines. It's no big deal, but maybe we can be a bit more careful going forward?"</button>
+    </div>
+    <div class="outcome-box" id="oc1"></div>
+    <div class="scenario-next" id="sn1"><button class="next-btn" onclick="goTo(6)">See Quick Reference &#8594;</button></div>
+  </div>
+
+  <div class="btn-row"><button class="back-btn" onclick="goTo(4)">&#8592; Back</button></div>
+</section>
+
+<!-- SECTION 7: CHEAT SHEET -->
+<section class="lesson" id="l6">
+  <div class="lesson-eyebrow">Section 7 of 7</div>
+  <h2>Your Feedback Quick Reference</h2>
+  <div class="hook">Keep this as your go-to reference before any feedback conversation.</div>
+
+  <div class="cheatsheet">
+    <h3>&#128203; SBI Feedback Framework</h3>
+    <div class="cheat-row"><div class="key">S — Situation</div><div class="val">Describe the specific context: when and where. "In Tuesday's client call..." / "Last week, when the proposal was due..."</div></div>
+    <div class="cheat-row"><div class="key">B — Behavior</div><div class="val">Describe observable facts only — what the person said or did. No interpretations. "You submitted the report without the financial analysis section."</div></div>
+    <div class="cheat-row"><div class="key">I — Impact</div><div class="val">Explain the real effect on the team, project, or customer. "...which meant the client couldn't approve the budget that day."</div></div>
+  </div>
+
+  <div class="section-label">Five principles to keep in mind</div>
+  <div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;overflow:hidden;margin-bottom:8px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;font-size:.88rem">
+      <div style="padding:14px 18px;border-right:1px solid #f5f5f4;border-bottom:1px solid #f5f5f4"><strong style="display:block;color:#d97706;margin-bottom:4px">Be Specific</strong>Observable events, not general impressions.</div>
+      <div style="padding:14px 18px;border-bottom:1px solid #f5f5f4"><strong style="display:block;color:#d97706;margin-bottom:4px">Be Timely</strong>Within 24-48 hours of the event.</div>
+      <div style="padding:14px 18px;border-right:1px solid #f5f5f4;border-bottom:1px solid #f5f5f4"><strong style="display:block;color:#d97706;margin-bottom:4px">Focus on Behavior</strong>Actions, not personality traits.</div>
+      <div style="padding:14px 18px;border-bottom:1px solid #f5f5f4"><strong style="display:block;color:#d97706;margin-bottom:4px">Be Balanced</strong>Use SBI for positive feedback too, not just corrective.</div>
+      <div style="padding:14px 18px;border-right:1px solid #f5f5f4"><strong style="display:block;color:#d97706;margin-bottom:4px">Follow Up</strong>Revisit within 1-2 weeks to acknowledge progress.</div>
+      <div style="padding:14px 18px"><strong style="display:block;color:#d97706;margin-bottom:4px">Stay Private</strong>Corrective feedback: always one-on-one, never public.</div>
+    </div>
+  </div>
+
+  <div class="complete-banner" style="margin-top:28px">
+    <div class="check">&#127881;</div>
+    <h2>Course Complete</h2>
+    <p>You now have a repeatable framework for delivering feedback that is specific, factual, and focused on impact — not feelings or judgment. The next step is practice: real conversations, real situations, SBI.</p>
+    <a href="../" class="back-link">&#8592; Back to Portfolio</a>
+  </div>
+</section>
+
+</div>
+
+<script>
+let currentLesson = 0;
+const total = 7;
+
+function goTo(n) {
+  document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('l' + n).classList.add('active');
+  document.querySelectorAll('.nav-btn')[n].classList.add('active');
+  currentLesson = n;
+  const pct = Math.round((n / (total - 1)) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = 'Section ' + (n+1) + ' of ' + total;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+    if (i < n) b.classList.add('done'); else b.classList.remove('done');
+  });
+}
+
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', function() { goTo(parseInt(this.dataset.lesson)); });
+});
+
+function showSBI(n) {
+  document.querySelectorAll('.sbi-block').forEach((c,i) => c.classList.toggle('active', i===n));
+  document.querySelectorAll('.sbi-detail').forEach(d => d.classList.remove('active'));
+  document.getElementById('sbi'+n).classList.add('active');
+}
+
+function checkBuilder() {
+  const s = document.getElementById('sb-s').value;
+  const b = document.getElementById('sb-b').value;
+  const i = document.getElementById('sb-i').value;
+  const res = document.getElementById('builder-result');
+  if (!s || !b || !i) { res.className='builder-result show wrong'; res.textContent='Please select an option for all three parts.'; return; }
+  const allCorrect = s==='correct' && b==='correct' && i==='correct';
+  res.className = 'builder-result show ' + (allCorrect ? 'correct' : 'wrong');
+  if (allCorrect) {
+    res.textContent = '✓ Excellent. Your full SBI statement: "In this morning\'s brainstorming session [S], you didn\'t contribute any ideas during the first 30 minutes [B], which meant the team missed your perspective on the product strategy we\'re developing [I]."';
+  } else {
+    let msg = 'Not quite. ';
+    if (s !== 'correct') msg += 'For Situation: choose the specific time and place. ';
+    if (b !== 'correct') msg += 'For Behavior: stick to observable facts — what you actually saw or heard, not an interpretation. ';
+    if (i !== 'correct') msg += 'For Impact: describe the real effect on the team or work — not your feelings or a character judgment.';
+    res.textContent = msg;
+  }
+}
+
+function pickChoice(scene, choice) {
+  const choices = document.querySelectorAll('#sf1 .choice-btn');
+  choices.forEach(c => c.disabled = true);
+  const oc = document.getElementById('oc1');
+  const sn = document.getElementById('sn1');
+  oc.classList.add('show');
+  sn.classList.add('show');
+
+  if (choice === 'B') {
+    choices[1].classList.add('chosen-correct');
+    oc.className = 'outcome-box show correct';
+    oc.innerHTML = '<strong>&#10004; Strong choice.</strong> Option B uses the SBI framework exactly: it names the specific situation (three weeks, two deliverables), describes the observable behavior (submitted late, no notice), and identifies the impact (others had to cover). It opens the conversation with facts — not accusations — giving Jordan a clear picture of the issue without triggering defensiveness.';
+  } else if (choice === 'A') {
+    choices[0].classList.add('chosen-wrong');
+    oc.className = 'outcome-box show wrong';
+    oc.innerHTML = '<strong>&#10008; Too vague and accusatory.</strong> "Dropping the ball" is a judgment, not an observation. Jordan is likely to feel attacked and become defensive — and you haven\'t actually described what the problem is in concrete terms. Try Option B and notice how different it feels.';
+  } else {
+    choices[2].classList.add('chosen-wrong');
+    oc.className = 'outcome-box show wrong';
+    oc.innerHTML = '<strong>&#10008; Too soft — the feedback won\'t land.</strong> Framing a serious performance issue as "no big deal" and burying it in compliments is the feedback sandwich mistake. Jordan won\'t understand the urgency, and the behavior is likely to continue. Effective feedback is kind AND clear — not one or the other.';
+  }
+}
+</script>
+</body>
 </html>
