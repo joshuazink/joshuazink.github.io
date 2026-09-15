@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Coaching Conversation: Navigating a Performance Conversation</title>
+<style>
+  :root {
+    --navy: #1A355E;
+    --navy-light: #2E5490;
+    --blue-mid: #2E75B6;
+    --blue-pale: #E8EFF8;
+    --green: #1B7A3A;
+    --green-pale: #E8F5E9;
+    --amber: #C06C00;
+    --amber-pale: #FFF8EE;
+    --red: #C0392B;
+    --dark: #1A1A1A;
+    --gray: #6B7280;
+    --gray-light: #F4F6FA;
+    --border: #D1D9E6;
+    --white: #FFFFFF;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --radius: 10px;
+    --shadow: 0 4px 24px rgba(26,53,94,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--gray-light);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    width: 100%;
+    background: var(--navy);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .topbar-title {
+    color: var(--white);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.92;
+  }
+  .topbar-meta {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.78rem;
+  }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    width: 100%;
+    background: rgba(255,255,255,0.12);
+    height: 4px;
+  }
+  .progress-bar {
+    height: 4px;
+    background: #7BB8F0;
+    transition: width 0.5s ease;
+  }
+
+  /* ── Main content area ── */
+  .stage {
+    width: 100%;
+    max-width: 760px;
+    padding: 40px 24px 80px;
+    flex: 1;
+  }
+
+  /* ── Screen card ── */
+  .screen {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .screen.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Lesson badge ── */
+  .lesson-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .lesson-badge .dot {
+    width: 6px; height: 6px;
+    background: #7BB8F0;
+    border-radius: 50%;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 40px 32px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Cover card ── */
+  .cover-card {
+    background: linear-gradient(145deg, var(--navy) 0%, #1e4a7a 100%);
+    color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 52px 48px 44px;
+    margin-bottom: 20px;
+  }
+  .cover-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7BB8F0;
+    margin-bottom: 16px;
+  }
+  .cover-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.22;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .cover-subtitle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.70);
+    margin-bottom: 36px;
+    line-height: 1.5;
+  }
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 24px;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cover-meta-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .cover-meta-val {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.88);
+  }
+
+  /* ── Scenario context chip ── */
+  .scenario-chip {
+    background: var(--blue-pale);
+    border: 1px solid #C4D8F0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 0.84rem;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+  .scenario-chip strong { font-weight: 700; }
+
+  /* ── Heading ── */
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  /* ── Body text ── */
+  .body-text p {
+    font-size: 1rem;
+    line-height: 1.72;
+    color: #2C3E50;
+    margin-bottom: 18px;
+  }
+  .body-text p:last-child { margin-bottom: 0; }
+
+  /* ── KC question ── */
+  .kc-question {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  /* ── Choices ── */
+  .choices { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.12s;
+    background: var(--white);
+  }
+  .choice:hover:not(.locked) {
+    border-color: var(--blue-mid);
+    background: var(--blue-pale);
+    transform: translateX(2px);
+  }
+  .choice.selected { border-color: var(--blue-mid); background: var(--blue-pale); }
+  .choice.correct  { border-color: var(--green);    background: var(--green-pale); }
+  .choice.wrong    { border-color: var(--red);      background: #FEECEB; }
+  .choice.locked   { cursor: default; }
+
+  .choice-letter {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--dark);
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.18s, color 0.18s;
+    margin-top: 1px;
+  }
+  .choice.selected  .choice-letter { background: var(--blue-mid);  color: var(--white); }
+  .choice.correct   .choice-letter { background: var(--green);     color: var(--white); }
+  .choice.wrong     .choice-letter { background: var(--red);       color: var(--white); }
+
+  .choice-text { font-size: 0.96rem; line-height: 1.55; color: var(--dark); }
+
+  /* ── Feedback panel ── */
+  .feedback-panel {
+    display: none;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    border-left: 4px solid transparent;
+    animation: fadeIn 0.25s ease;
+  }
+  .feedback-panel.correct-panel {
+    background: var(--green-pale);
+    border-color: var(--green);
+  }
+  .feedback-panel.wrong-panel {
+    background: var(--amber-pale);
+    border-color: var(--amber);
+  }
+  .feedback-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .correct-panel .feedback-label { color: var(--green); }
+  .wrong-panel   .feedback-label { color: var(--amber); }
+  .feedback-text { font-size: 0.95rem; line-height: 1.6; color: var(--dark); }
+
+  /* ── Outcome card ── */
+  .outcome-card {
+    background: linear-gradient(145deg, var(--navy) 0%, #1e4a7a 100%);
+    color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+    margin-bottom: 20px;
+  }
+  .outcome-card h2 { color: var(--white); margin-bottom: 18px; }
+  .outcome-card p  { color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.72; margin-bottom: 16px; }
+  .outcome-card p:last-child { margin-bottom: 0; }
+  .principle-list {
+    list-style: none;
+    margin: 20px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .principle-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.96rem;
+    color: rgba(255,255,255,0.90);
+  }
+  .principle-list li::before {
+    content: '';
+    display: block;
+    width: 8px; height: 8px;
+    background: #7BB8F0;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Buttons ── */
+  .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: 8px;
+    font-size: 0.94rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.12s, background 0.18s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-submit  { background: var(--blue-mid); color: var(--white); }
+  .btn-submit:disabled { background: var(--border); color: var(--gray); cursor: default; transform: none; opacity: 1; }
+  .btn-restart { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.45); }
+  .btn-restart:hover { border-color: rgba(255,255,255,0.88); opacity: 1; }
+
+  .arrow { font-size: 1rem; }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .card, .cover-card, .outcome-card { padding: 24px 20px; }
+    .cover-title { font-size: 1.5rem; }
+    .stage { padding: 24px 16px 60px; }
+    .topbar { padding: 12px 20px; }
+    .topbar-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-title">The Coaching Conversation</div>
+  <div class="topbar-meta" id="progressLabel">Screen 1 of 11</div>
+</div>
+<div class="progress-wrap">
+  <div class="progress-bar" id="progressBar" style="width:9%"></div>
+</div>
+
+<!-- Stage -->
+<div class="stage">
+
+  <!-- ════════════════════════════
+       SCREEN 0 — COVER
+  ════════════════════════════ -->
+  <div class="screen active" id="screen-0">
+    <div class="cover-card">
+      <div class="cover-eyebrow">Branching Scenario &nbsp;·&nbsp; Rise 360 / HTML</div>
+      <div class="cover-title">The Coaching Conversation:<br>Navigating a Performance Conversation</div>
+      <div class="cover-subtitle">A scenario-based course for people managers. Your decisions shape the outcome. Every choice matters.</div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Audience</div>
+          <div class="cover-meta-val">People managers</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Format</div>
+          <div class="cover-meta-val">Branching scenario + Knowledge Checks</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Duration</div>
+          <div class="cover-meta-val">~10 minutes</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="cover-meta-label">Designer</div>
+          <div class="cover-meta-val">Joshua Zink</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(1)">Start Course <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       LESSON 1 — INTRODUCTION
+  ════════════════════════════ -->
+
+  <!-- Screen 1 — L1 Text Block -->
+  <div class="screen" id="screen-1">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 1 of 5 &nbsp;·&nbsp; Introduction: The Situation</div>
+    <div class="card">
+      <h2>Meet Jordan</h2>
+      <div class="body-text">
+        <p>You are Alex Rivera, a manager on a client services team. Your direct report, Jordan, missed the Meridian client deliverable last Friday. The client noticed. Your director noticed. Now you need to have a conversation.</p>
+        <p>Jordan has been on your team for two years. This is the first time a deadline has slipped. Their track record is strong. Before you say anything, you need to decide: how are you going to approach this conversation?</p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(2)">Continue <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- Screen 2 — L1 KC -->
+  <div class="screen" id="screen-2">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 1 of 5 &nbsp;·&nbsp; Knowledge Check</div>
+    <div class="card">
+      <div class="kc-question">Before you meet with Jordan, how do you prepare?</div>
+      <div class="choices" id="choices-2">
+        <div class="choice" onclick="selectChoice(2,'A')" id="c2-A">
+          <div class="choice-letter">A</div>
+          <div class="choice-text">Pull Jordan's recent work, note this is a first offense, and schedule a private 1:1 to understand what happened.</div>
+        </div>
+        <div class="choice" onclick="selectChoice(2,'B')" id="c2-B">
+          <div class="choice-letter">B</div>
+          <div class="choice-text">Send Jordan an email asking them to explain in writing what happened with the Meridian deliverable.</div>
+        </div>
+        <div class="choice" onclick="selectChoice(2,'C')" id="c2-C">
+          <div class="choice-letter">C</div>
+          <div class="choice-text">Walk over to Jordan's desk and ask them directly what happened in front of the rest of the team.</div>
+        </div>
+      </div>
+      <div class="feedback-panel correct-panel" id="fb-correct-2">
+        <div class="feedback-label">Correct</div>
+        <div class="feedback-text">Good instinct. Reviewing the context first helps you enter the conversation informed rather than reactive. Scheduling a private conversation protects Jordan's dignity and sets a coaching tone before the meeting starts.</div>
+      </div>
+      <div class="feedback-panel wrong-panel" id="fb-wrong-2">
+        <div class="feedback-label">Not quite</div>
+        <div class="feedback-text">That approach skips the preparation and the private setting that a coaching conversation requires. A coaching mindset begins before the conversation does -- with context, not confrontation.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-submit" id="submit-2" onclick="submitKC(2,'A')" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       LESSON 2 — THE OPENING
+  ════════════════════════════ -->
+
+  <!-- Screen 3 — L2 Text Block -->
+  <div class="screen" id="screen-3">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 2 of 5 &nbsp;·&nbsp; The Opening: Starting the Conversation</div>
+    <div class="card">
+      <h2>The Meeting Begins</h2>
+      <div class="body-text">
+        <p>It is 10 AM. Jordan walks into your office and takes a seat. You can tell they are tense. They know why they are here.</p>
+        <p>This is the first time you have had to address a performance issue with Jordan. This is not a disciplinary conversation. It is a coaching conversation. The difference is everything: your tone, your opening question, and the direction you take from here.</p>
+        <p>How you open this conversation will determine whether Jordan feels safe enough to tell you the truth.</p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(4)">Continue <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- Screen 4 — L2 KC -->
+  <div class="screen" id="screen-4">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 2 of 5 &nbsp;·&nbsp; Knowledge Check</div>
+    <div class="card">
+      <div class="kc-question">You want to start with curiosity, not conclusions. How do you open the conversation with Jordan?</div>
+      <div class="choices" id="choices-4">
+        <div class="choice" onclick="selectChoice(4,'A')" id="c4-A">
+          <div class="choice-letter">A</div>
+          <div class="choice-text">Start with a calm, open-ended question: "I wanted to check in with you about the Meridian deliverable. Can you walk me through what happened on Friday?"</div>
+        </div>
+        <div class="choice" onclick="selectChoice(4,'B')" id="c4-B">
+          <div class="choice-letter">B</div>
+          <div class="choice-text">Jump straight to the problem: "The client is upset and my director is on my case. What went wrong with the Meridian deliverable?"</div>
+        </div>
+        <div class="choice" onclick="selectChoice(4,'C')" id="c4-C">
+          <div class="choice-letter">C</div>
+          <div class="choice-text">Open with an explanation of consequences: "I need to tell you that this missed deadline is now on your record and could affect your performance rating."</div>
+        </div>
+      </div>
+      <div class="feedback-panel correct-panel" id="fb-correct-4">
+        <div class="feedback-label">Correct</div>
+        <div class="feedback-text">Well done. Starting with a genuine, open-ended question invites Jordan to share rather than defend, and establishes a coaching tone from the start.</div>
+      </div>
+      <div class="feedback-panel wrong-panel" id="fb-wrong-4">
+        <div class="feedback-label">Not quite</div>
+        <div class="feedback-text">That approach is likely to put Jordan on the defensive. Effective coaching conversations start with curiosity and an open question, not urgency or consequences.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-submit" id="submit-4" onclick="submitKC(4,'A')" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       LESSON 3 — THE CORE
+  ════════════════════════════ -->
+
+  <!-- Screen 5 — L3 Text Block -->
+  <div class="screen" id="screen-5">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 3 of 5 &nbsp;·&nbsp; The Core: Uncovering What Happened</div>
+    <div class="card">
+      <h2>Digging Deeper</h2>
+      <div class="body-text">
+        <p>Jordan opens up. They explain that Friday was chaotic: three competing deadlines, an emergency call from another stakeholder, and the Meridian deliverable slipped. Jordan looks frustrated with themselves.</p>
+        <p>You can tell this is not a pattern. It is a moment.</p>
+        <p>Now the real coaching begins. What do you do with what you just heard?</p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(6)">Continue <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- Screen 6 — L3 KC -->
+  <div class="screen" id="screen-6">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 3 of 5 &nbsp;·&nbsp; Knowledge Check</div>
+    <div class="card">
+      <div class="kc-question">Jordan says: "I honestly just got pulled in too many directions at once. I'm really sorry." How do you respond?</div>
+      <div class="choices" id="choices-6">
+        <div class="choice" onclick="selectChoice(6,'A')" id="c6-A">
+          <div class="choice-letter">A</div>
+          <div class="choice-text">Acknowledge what you heard and ask a coaching question: "It sounds like you were dealing with a lot at once. What do you think could have helped you catch this earlier?"</div>
+        </div>
+        <div class="choice" onclick="selectChoice(6,'B')" id="c6-B">
+          <div class="choice-letter">B</div>
+          <div class="choice-text">Move to problem-solving immediately: "Okay, so next time just drop everything else and focus on the top priority deliverable until it is done."</div>
+        </div>
+        <div class="choice" onclick="selectChoice(6,'C')" id="c6-C">
+          <div class="choice-letter">C</div>
+          <div class="choice-text">Reassure and close: "I appreciate you being honest. It happens. Just make sure this doesn't happen again and we'll move on."</div>
+        </div>
+      </div>
+      <div class="feedback-panel correct-panel" id="fb-correct-6">
+        <div class="feedback-label">Correct</div>
+        <div class="feedback-text">Good instinct. Acknowledging first shows you heard Jordan, then asking a coaching question helps develop self-awareness and ownership rather than just a promise to do better.</div>
+      </div>
+      <div class="feedback-panel wrong-panel" id="fb-wrong-6">
+        <div class="feedback-label">Not quite</div>
+        <div class="feedback-text">Jumping to solutions or minimizing the situation skips the coaching moment. Reflect back what you heard, then invite Jordan to think through it with you.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-submit" id="submit-6" onclick="submitKC(6,'A')" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       LESSON 4 — PATH FORWARD
+  ════════════════════════════ -->
+
+  <!-- Screen 7 — L4 Text Block -->
+  <div class="screen" id="screen-7">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 4 of 5 &nbsp;·&nbsp; The Path Forward: Commitment and Close</div>
+    <div class="card">
+      <h2>Moving Forward Together</h2>
+      <div class="body-text">
+        <p>The conversation is shifting. Jordan has reflected, taken ownership, and is now engaged. You have acknowledged what happened and explored the root cause.</p>
+        <p>Now it is time to close the loop: agree on a specific path forward, reinforce your confidence in Jordan, and leave them feeling supported.</p>
+        <p>How you close this conversation matters as much as how you opened it.</p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(8)">Continue <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- Screen 8 — L4 KC -->
+  <div class="screen" id="screen-8">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 4 of 5 &nbsp;·&nbsp; Knowledge Check</div>
+    <div class="card">
+      <div class="kc-question">Jordan has reflected and taken responsibility. You are ready to close the conversation. What is the best way to wrap up?</div>
+      <div class="choices" id="choices-8">
+        <div class="choice" onclick="selectChoice(8,'A')" id="c8-A">
+          <div class="choice-letter">A</div>
+          <div class="choice-text">Agree on a specific action together: "Let's put a standing flag in place so if you're ever stretched thin again, you reach out before a deadline slips. Does that work for you?" Then affirm Jordan's ownership and close with confidence.</div>
+        </div>
+        <div class="choice" onclick="selectChoice(8,'B')" id="c8-B">
+          <div class="choice-letter">B</div>
+          <div class="choice-text">End with a warning: "I'm glad we talked, but I need you to understand that another miss like this will have real consequences for your standing on the team."</div>
+        </div>
+        <div class="choice" onclick="selectChoice(8,'C')" id="c8-C">
+          <div class="choice-letter">C</div>
+          <div class="choice-text">Keep it brief: "Okay, good talk. Just make sure it doesn't happen again. You're dismissed."</div>
+        </div>
+      </div>
+      <div class="feedback-panel correct-panel" id="fb-correct-8">
+        <div class="feedback-label">Correct</div>
+        <div class="feedback-text">Exactly. Closing with a concrete agreement and a genuine affirmation reinforces accountability without undermining trust. The conversation ends on a note of partnership.</div>
+      </div>
+      <div class="feedback-panel wrong-panel" id="fb-wrong-8">
+        <div class="feedback-label">Not quite</div>
+        <div class="feedback-text">A coaching conversation that ends with a threat or a dismissal loses the ground you gained. The close should reinforce ownership and confidence, not fear.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-submit" id="submit-8" onclick="submitKC(8,'A')" disabled>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       LESSON 5 — THE OUTCOME
+  ════════════════════════════ -->
+
+  <!-- Screen 9 — L5 Text Block -->
+  <div class="screen" id="screen-9">
+    <div class="lesson-badge"><span class="dot"></span>Lesson 5 of 5 &nbsp;·&nbsp; The Outcome</div>
+    <div class="card">
+      <h2>What You Did Well</h2>
+      <div class="body-text">
+        <p>You navigated this conversation the way a skilled coach does: with curiosity before conclusions, context before consequences, and commitment before closure.</p>
+        <p>You opened with a question, not a verdict. You listened before you led. You helped Jordan think rather than just telling them what to do. And you closed with a specific agreement and a clear expression of confidence.</p>
+        <p>That is what coaching leadership looks like in practice.</p>
+        <p>The conversation with Jordan is over. But the skills you practiced here apply to every difficult conversation you will lead from here. The more you lead with curiosity, the stronger your relationships and your team will become.</p>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(10)">See Summary <span class="arrow">→</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       SCREEN 10 — COMPLETION
+  ════════════════════════════ -->
+  <div class="screen" id="screen-10">
+    <div class="outcome-card">
+      <h2>Course Complete</h2>
+      <p>You practiced the full arc of a coaching conversation:</p>
+      <ul class="principle-list">
+        <li>Prepared with context before the conversation</li>
+        <li>Opened with curiosity, not conclusions</li>
+        <li>Listened before leading</li>
+        <li>Closed with a specific commitment and affirmation</li>
+      </ul>
+      <p>Every difficult conversation you lead from here is an opportunity to build trust while holding people accountable. Those two things are not opposites -- they are the point.</p>
+      <div class="btn-row" style="justify-content:flex-start; margin-top:28px;">
+        <button class="btn btn-restart" onclick="restart()">↺ &nbsp;Restart Course</button>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--gray-light); box-shadow: none; border: 1px solid var(--border);">
+      <div style="font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:12px;">Design Notes</div>
+      <div style="font-size:0.88rem; line-height:1.65; color:var(--gray);">
+        Built in Articulate Rise 360 and adapted as a standalone HTML course. Scenario-based design following Merrill's First Principles. Characters: Alex Rivera (learner / manager), Jordan (direct report). Scenario: Jordan missed the Meridian client deliverable -- first offense, strong track record. Designer: Joshua Zink.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+  const TOTAL_SCREENS = 11; // 0–10
+  let currentScreen = 0;
+  const selectedChoices = {};
+  const submittedKCs = {};
+
+  function goTo(n) {
+    document.getElementById('screen-' + currentScreen).classList.remove('active');
+    currentScreen = n;
+    document.getElementById('screen-' + n).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const pct = Math.round((currentScreen / (TOTAL_SCREENS - 1)) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      currentScreen === 0 ? 'Introduction' :
+      currentScreen === 10 ? 'Complete' :
+      'Screen ' + currentScreen + ' of ' + (TOTAL_SCREENS - 2);
+  }
+
+  function selectChoice(screen, letter) {
+    if (submittedKCs[screen]) return;
+    selectedChoices[screen] = letter;
+
+    // Reset all choices
+    ['A','B','C'].forEach(l => {
+      const el = document.getElementById('c' + screen + '-' + l);
+      el.classList.remove('selected');
+    });
+
+    document.getElementById('c' + screen + '-' + letter).classList.add('selected');
+    document.getElementById('submit-' + screen).disabled = false;
+  }
+
+  function submitKC(screen, correctAnswer) {
+    if (submittedKCs[screen]) {
+      // Already submitted — advance
+      goTo(screen + 1);
+      return;
+    }
+
+    const chosen = selectedChoices[screen];
+    if (!chosen) return;
+
+    submittedKCs[screen] = true;
+    const isCorrect = (chosen === correctAnswer);
+
+    // Lock all choices
+    ['A','B','C'].forEach(l => {
+      const el = document.getElementById('c' + screen + '-' + l);
+      el.classList.add('locked');
+      el.onclick = null;
+    });
+
+    // Style chosen
+    const chosenEl = document.getElementById('c' + screen + '-' + chosen);
+    chosenEl.classList.remove('selected');
+    chosenEl.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    // If wrong, also highlight correct
+    if (!isCorrect) {
+      document.getElementById('c' + screen + '-' + correctAnswer).classList.add('correct');
+    }
+
+    // Show feedback
+    document.getElementById('fb-' + (isCorrect ? 'correct' : 'wrong') + '-' + screen).style.display = 'block';
+
+    // Change submit to Continue
+    const btn = document.getElementById('submit-' + screen);
+    btn.textContent = 'Continue →';
+    btn.disabled = false;
+    btn.onclick = function() { goTo(screen + 1); };
+    btn.className = 'btn btn-primary';
+  }
+
+  function restart() {
+    // Reset state
+    Object.keys(selectedChoices).forEach(k => delete selectedChoices[k]);
+    Object.keys(submittedKCs).forEach(k => delete submittedKCs[k]);
+
+    // Reset all KC screens
+    [2, 4, 6, 8].forEach(s => {
+      ['A','B','C'].forEach(l => {
+        const el = document.getElementById('c' + s + '-' + l);
+        el.classList.remove('selected','correct','wrong','locked');
+        el.onclick = function() { selectChoice(s, l); };
+      });
+      document.getElementById('fb-correct-' + s).style.display = 'none';
+      document.getElementById('fb-wrong-' + s).style.display = 'none';
+      const btn = document.getElementById('submit-' + s);
+      btn.textContent = 'Submit';
+      btn.disabled = true;
+      btn.className = 'btn btn-submit';
+      const correctMap = {2:'A',4:'A',6:'A',8:'A'};
+      btn.onclick = function() { submitKC(s, correctMap[s]); };
+    });
+
+    goTo(0);
+  }
+
+  // Initialize progress
+  updateProgress();
+</script>
+</body>
+</html>
