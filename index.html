@@ -12,43 +12,23 @@
       color: #1a1a2e;
       line-height: 1.6;
     }
-
-    /* HEADER */
     header {
       background: linear-gradient(135deg, #0d1b4b 0%, #1a3a7a 100%);
       color: #fff;
       padding: 56px 24px 48px;
       text-align: center;
     }
-    header h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    header .subtitle {
-      font-size: 1.05rem;
-      color: #a8c4f0;
-      margin-bottom: 20px;
-    }
-    header .contact {
-      font-size: 0.92rem;
-      color: #c8d8f0;
-    }
-    header .contact a {
-      color: #7fb3ff;
-      text-decoration: none;
-    }
+    header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+    header .subtitle { font-size: 1.05rem; color: #a8c4f0; margin-bottom: 20px; }
+    header .contact { font-size: 0.92rem; color: #c8d8f0; }
+    header .contact a { color: #7fb3ff; text-decoration: none; }
     header .contact a:hover { text-decoration: underline; }
     header .contact span { margin: 0 8px; opacity: 0.5; }
-
-    /* TAB NAV */
     .tab-nav {
       background: #fff;
       border-bottom: 2px solid #e2e6ef;
       display: flex;
       justify-content: center;
-      gap: 0;
     }
     .tab-btn {
       background: none;
@@ -63,237 +43,77 @@
       transition: color 0.15s;
     }
     .tab-btn:hover { color: #2563eb; }
-    .tab-btn.active {
-      color: #2563eb;
-      border-bottom-color: #2563eb;
-    }
-
-    /* TAB SECTIONS */
+    .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
     .tab-section { display: none; }
     .tab-section.active { display: block; }
-
-    /* INTRO */
-    .intro {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 40px 24px 8px;
-      text-align: center;
-    }
-    .intro p {
-      font-size: 1.05rem;
-      color: #444;
-      line-height: 1.75;
-      margin-bottom: 12px;
-    }
-
-    /* SECTION LABEL */
+    .intro { max-width: 820px; margin: 0 auto; padding: 40px 24px 8px; text-align: center; }
+    .intro p { font-size: 1.05rem; color: #444; line-height: 1.75; margin-bottom: 12px; }
     .section-label {
-      text-align: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #6b7a99;
-      padding: 32px 24px 8px;
+      text-align: center; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: #6b7a99; padding: 32px 24px 8px;
     }
-
-    /* GRID */
     .grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 16px 24px 48px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-      gap: 28px;
+      max-width: 1100px; margin: 0 auto; padding: 16px 24px 48px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 28px;
     }
-
-    /* CARD */
     .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden; display: flex; flex-direction: column;
       transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.13);
-    }
-    .card-accent {
-      height: 5px;
-      width: 100%;
-    }
-    .card-body {
-      padding: 28px 28px 20px;
-      flex: 1;
-    }
-    .card-tag {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .card-body h2 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 10px;
-      line-height: 1.35;
-    }
-    .card-body p {
-      font-size: 0.92rem;
-      color: #555;
-      line-height: 1.65;
-      margin-bottom: 16px;
-    }
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .meta-chip {
-      font-size: 0.75rem;
-      background: #f0f2f7;
-      color: #4a5568;
-      border-radius: 20px;
-      padding: 3px 12px;
-    }
-    .card-footer {
-      padding: 16px 28px 24px;
-    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.13); }
+    .card-accent { height: 5px; width: 100%; }
+    .card-body { padding: 28px 28px 20px; flex: 1; }
+    .card-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .card-body h2 { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; line-height: 1.35; }
+    .card-body p { font-size: 0.92rem; color: #555; line-height: 1.65; margin-bottom: 16px; }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .meta-chip { font-size: 0.75rem; background: #f0f2f7; color: #4a5568; border-radius: 20px; padding: 3px 12px; }
+    .card-footer { padding: 16px 28px 24px; }
     .launch-btn {
-      display: inline-block;
-      padding: 11px 26px;
-      border-radius: 7px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: #fff;
-      transition: opacity 0.15s;
+      display: inline-block; padding: 11px 26px; border-radius: 7px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none; color: #fff; transition: opacity 0.15s;
     }
     .launch-btn:hover { opacity: 0.87; }
-
-    /* COLOR VARIANTS */
-    .blue   .card-accent { background: #2563eb; }
-    .blue   .card-tag    { color: #2563eb; }
-    .blue   .launch-btn  { background: #2563eb; }
-
-    .teal   .card-accent { background: #0d9488; }
-    .teal   .card-tag    { color: #0d9488; }
-    .teal   .launch-btn  { background: #0d9488; }
-
-    .violet .card-accent { background: #7c3aed; }
-    .violet .card-tag    { color: #7c3aed; }
-    .violet .launch-btn  { background: #7c3aed; }
-
-    .amber  .card-accent { background: #d97706; }
-    .amber  .card-tag    { color: #d97706; }
-    .amber  .launch-btn  { background: #d97706; }
-
-    .green  .card-accent { background: #16a34a; }
-    .green  .card-tag    { color: #16a34a; }
-    .green  .launch-btn  { background: #16a34a; }
-
-    /* ABOUT SECTION */
+    .blue   .card-accent { background: #2563eb; } .blue   .card-tag { color: #2563eb; } .blue   .launch-btn { background: #2563eb; }
+    .teal   .card-accent { background: #0d9488; } .teal   .card-tag { color: #0d9488; } .teal   .launch-btn { background: #0d9488; }
+    .violet .card-accent { background: #7c3aed; } .violet .card-tag { color: #7c3aed; } .violet .launch-btn { background: #7c3aed; }
+    .amber  .card-accent { background: #d97706; } .amber  .card-tag { color: #d97706; } .amber  .launch-btn { background: #d97706; }
+    .green  .card-accent { background: #16a34a; } .green  .card-tag { color: #16a34a; } .green  .launch-btn { background: #16a34a; }
     .about-wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 56px 24px 64px;
-      display: flex;
-      gap: 48px;
-      align-items: flex-start;
+      max-width: 860px; margin: 0 auto; padding: 56px 24px 64px;
+      display: flex; gap: 48px; align-items: flex-start;
     }
     .about-photo {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center top;
-      border: 4px solid #e2e6ef;
-      flex-shrink: 0;
+      width: 160px; height: 160px; border-radius: 50%;
+      object-fit: cover; object-position: center top;
+      border: 4px solid #e2e6ef; flex-shrink: 0;
     }
-    .about-content h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #0d1b4b;
-      margin-bottom: 4px;
-    }
-    .about-title {
-      font-size: 0.92rem;
-      color: #6b7a99;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-    .about-content p {
-      font-size: 0.97rem;
-      color: #444;
-      line-height: 1.8;
-      margin-bottom: 18px;
-    }
-    .skills-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 24px 0 28px;
-    }
-    .skill-chip {
-      font-size: 0.78rem;
-      font-weight: 600;
-      background: #eef2fb;
-      color: #2563eb;
-      border-radius: 20px;
-      padding: 4px 14px;
-    }
-    .about-btns {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .about-content h2 { font-size: 1.6rem; font-weight: 700; color: #0d1b4b; margin-bottom: 4px; }
+    .about-title { font-size: 0.92rem; color: #6b7a99; margin-bottom: 24px; line-height: 1.5; }
+    .about-content p { font-size: 0.97rem; color: #444; line-height: 1.8; margin-bottom: 18px; }
+    .skills-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 28px; }
+    .skill-chip { font-size: 0.78rem; font-weight: 600; background: #eef2fb; color: #2563eb; border-radius: 20px; padding: 4px 14px; }
+    .about-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-primary {
-      display: inline-block;
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 11px 24px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: opacity 0.15s;
+      display: inline-block; background: #2563eb; color: #fff; border: none;
+      border-radius: 8px; padding: 11px 24px; font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; transition: opacity 0.15s;
     }
     .btn-primary:hover { opacity: 0.87; }
     .btn-secondary {
-      display: inline-block;
-      background: #f0f2f7;
-      color: #1a1a2e;
-      border: none;
-      border-radius: 8px;
-      padding: 11px 24px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s;
+      display: inline-block; background: #f0f2f7; color: #1a1a2e; border: none;
+      border-radius: 8px; padding: 11px 24px; font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; transition: background 0.15s;
     }
     .btn-secondary:hover { background: #e2e6ef; }
-
-    /* FOOTER */
     footer {
-      background: #0d1b4b;
-      color: #a8c4f0;
-      text-align: center;
-      padding: 28px 24px;
-      font-size: 0.88rem;
+      background: #0d1b4b; color: #a8c4f0; text-align: center;
+      padding: 28px 24px; font-size: 0.88rem;
     }
     footer a { color: #7fb3ff; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     footer span { margin: 0 8px; opacity: 0.4; }
-
     @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
       header h1 { font-size: 1.8rem; }
@@ -321,24 +141,18 @@
     <button class="tab-btn" onclick="showTab('about')" aria-selected="false">About</button>
   </nav>
 
-  <!-- PORTFOLIO TAB -->
   <div id="portfolio-section" class="tab-section active">
-
     <div class="intro">
       <p>Every course here starts with a problem, not a content list.</p>
     </div>
-
-    <div class="section-label">Learning &amp; OD Portfolio — 5 Courses</div>
-
+    <div class="section-label">Learning &amp; OD Portfolio &mdash; 5 Courses</div>
     <div class="grid">
-
-      <!-- Card 1: How Adults Learn -->
       <div class="card blue">
         <div class="card-accent"></div>
         <div class="card-body">
-          <div class="card-tag">Adult Learning Science · L&amp;D Practitioners</div>
+          <div class="card-tag">Adult Learning Science &middot; L&amp;D Practitioners</div>
           <h2>Designing Effective Workplace Learning: The Science of Adult Training</h2>
-          <p>Translates adult learning research — Knowles, cognitive load theory, Kirkpatrick, Mayer — into practical instructional design decisions for L&amp;D professionals and managers.</p>
+          <p>Translates adult learning research &mdash; Knowles, cognitive load theory, Kirkpatrick, Mayer &mdash; into practical instructional design decisions for L&amp;D professionals and managers.</p>
           <div class="card-meta">
             <span class="meta-chip">6 lessons</span>
             <span class="meta-chip">Articulate Rise 360</span>
@@ -349,12 +163,10 @@
           <a class="launch-btn" href="how-adults-learn/" target="_blank" rel="noopener">Launch Course &rarr;</a>
         </div>
       </div>
-
-      <!-- Card 2: Change Management -->
       <div class="card teal">
         <div class="card-accent"></div>
         <div class="card-body">
-          <div class="card-tag">Organizational Development · People Managers</div>
+          <div class="card-tag">Organizational Development &middot; People Managers</div>
           <h2>Leading Teams Through Change: A Practical Guide for Managers</h2>
           <p>Equips mid-level managers with evidence-based tools for leading organizational transitions using the Prosci ADKAR model and Change Curve.</p>
           <div class="card-meta">
@@ -367,12 +179,10 @@
           <a class="launch-btn" href="change-management/" target="_blank" rel="noopener">Launch Course &rarr;</a>
         </div>
       </div>
-
-      <!-- Card 3: New Manager Feedback -->
       <div class="card violet">
         <div class="card-accent"></div>
         <div class="card-body">
-          <div class="card-tag">Manager Development · New Managers</div>
+          <div class="card-tag">Manager Development &middot; New Managers</div>
           <h2>Giving Feedback as a New Manager</h2>
           <p>Teaches the SBI (Situation-Behavior-Impact) feedback framework through two realistic branching workplace scenarios. Built for corporate onboarding and manager effectiveness programs.</p>
           <div class="card-meta">
@@ -385,14 +195,12 @@
           <a class="launch-btn" href="feedback-manager/" target="_blank" rel="noopener">Launch Course &rarr;</a>
         </div>
       </div>
-
-      <!-- Card 4: Vocal Feedback -->
       <div class="card amber">
         <div class="card-accent"></div>
         <div class="card-body">
-          <div class="card-tag">Technical / Domain-Specific · Music Educators</div>
+          <div class="card-tag">Technical / Domain-Specific &middot; Music Educators</div>
           <h2>Giving Effective, Evidence-Based Vocal Feedback</h2>
-          <p>Demonstrates instructional design for highly technical content — translating vocal science into actionable teaching frameworks for a specialized professional audience.</p>
+          <p>Demonstrates instructional design for highly technical content &mdash; translating vocal science into actionable teaching frameworks for a specialized professional audience.</p>
           <div class="card-meta">
             <span class="meta-chip">6 lessons + assessment</span>
             <span class="meta-chip">Articulate Rise 360</span>
@@ -403,14 +211,12 @@
           <a class="launch-btn" href="vocal-feedback/" target="_blank" rel="noopener">Launch Course &rarr;</a>
         </div>
       </div>
-
-      <!-- Card 5: Coaching Conversation -->
       <div class="card green">
         <div class="card-accent"></div>
         <div class="card-body">
-          <div class="card-tag">Coaching Skills · People Managers</div>
+          <div class="card-tag">Coaching Skills &middot; People Managers</div>
           <h2>The Coaching Conversation: Navigating a Performance Conversation</h2>
-          <p>A scenario-based course where every branching decision shapes the outcome — built in custom HTML/CSS/JS without an authoring tool.</p>
+          <p>A scenario-based course where every branching decision shapes the outcome &mdash; built in custom HTML/CSS/JS without an authoring tool.</p>
           <div class="card-meta">
             <span class="meta-chip">5 lessons</span>
             <span class="meta-chip">Custom HTML / CSS / JS</span>
@@ -421,11 +227,9 @@
           <a class="launch-btn" href="coaching-conversation/" target="_blank" rel="noopener">Launch Course &rarr;</a>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ABOUT TAB -->
   <div id="about-section" class="tab-section">
     <div class="about-wrap">
       <img src="assets/headshot.jpg" alt="Joshua Zink" class="about-photo">
@@ -433,7 +237,7 @@
         <h2>Joshua Zink, D.M.A.</h2>
         <p class="about-title">Assistant Professor &amp; Program Director, Kennesaw State University &middot; Kennesaw, GA / Atlanta Metro</p>
         <p>I'm a learning designer and OD practitioner whose work spans higher education, workplace learning, and organizational development. I hold a D.M.A. from the University of Nebraska-Lincoln and serve as Assistant Professor and director of the Opera program at Kennesaw State University, one of the university's major performing arts programs.</p>
-        <p>My design philosophy: start with the performance problem, not the content. Every course here was built around a real workplace gap — what people need to do differently, not just what they should know. I approach instructional design the same way I approach coaching: figure out what's actually in the way, then build something that removes it.</p>
+        <p>My design philosophy: start with the performance problem, not the content. Every course here was built around a real workplace gap -- what people need to do differently, not just what they should know. I approach instructional design the same way I approach coaching: figure out what's actually in the way, then build something that removes it.</p>
         <p>Two things shape how I think about high-stakes work. The first is my background as a professional opera artist: live, in front of an audience, one take. No editing after the fact. The second is endurance sport. Thirteen years of competitive running across every distance from the 5K to the marathon, and now active road cycling and racing. Both teach the same lesson: discipline and genuine preparation are the only things that hold up under pressure. That mindset carries directly into how I design, facilitate, and coach.</p>
         <div class="skills-chips">
           <span class="skill-chip">Instructional Design</span>
