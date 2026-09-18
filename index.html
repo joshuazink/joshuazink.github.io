@@ -45,7 +45,6 @@
     .tab-btn:hover { color: #2563eb; }
     .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
     .tab-section { display: none; }
-    .tab-section.active { display: block; }
     .intro { max-width: 820px; margin: 0 auto; padding: 40px 24px 8px; text-align: center; }
     .intro p { font-size: 1.05rem; color: #444; line-height: 1.75; margin-bottom: 12px; }
     .section-label {
@@ -141,7 +140,7 @@
     <button class="tab-btn" onclick="showTab('about')" aria-selected="false">About</button>
   </nav>
 
-  <div id="portfolio-section" class="tab-section active">
+  <div id="portfolio-section" class="tab-section" style="display:block;">
     <div class="intro">
       <p>Every course here starts with a problem, not a content list.</p>
     </div>
@@ -236,7 +235,7 @@
     </div>
   </div>
 
-  <div id="about-section" class="tab-section">
+  <div id="about-section" class="tab-section" style="display:none;">
     <div class="about-wrap">
       <img src="assets/headshot.jpg" alt="Joshua Zink" class="about-photo">
       <div class="about-content">
@@ -273,8 +272,8 @@
 
   <script>
     function showTab(tab) {
-      document.getElementById('portfolio-section').style.display = tab === 'portfolio' ? '' : 'none';
-      document.getElementById('about-section').style.display = tab === 'about' ? '' : 'none';
+      document.getElementById('portfolio-section').style.display = tab === 'portfolio' ? 'block' : 'none';
+      document.getElementById('about-section').style.display = tab === 'about' ? 'block' : 'none';
       document.querySelectorAll('.tab-btn').forEach(function(btn, i) {
         var isActive = (i === 0 && tab === 'portfolio') || (i === 1 && tab === 'about');
         btn.classList.toggle('active', isActive);
